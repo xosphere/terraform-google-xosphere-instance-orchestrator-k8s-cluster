@@ -30,14 +30,12 @@ resource "google_pubsub_subscription" "node_drain_topic_subscription" {
 }
 
 resource "google_pubsub_subscription_iam_member" "subscriber" {
-  count = var.binding_iam_policy ? 1 : 0
   subscription = google_pubsub_subscription.node_drain_topic_subscription.id
   role         = "roles/pubsub.subscriber"
   member = var.member_name
 }
 
 resource "google_storage_bucket_iam_member" "instance_state_bucket_iam_membership" {
-  count = var.binding_iam_policy ? 1 : 0
   bucket = var.instance_state_bucket_name
   role   = "roles/storage.objectCreator"
   member = var.member_name
